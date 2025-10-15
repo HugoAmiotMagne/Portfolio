@@ -33,6 +33,13 @@ jobs:
       - name: Installation des dépendances
         run: npm ci
 
+      #Etape optionnelle: Lancer les tests (si applicable)
+      - name: Verification du lint
+        run: npm run lint:check
+
+      - name: Verification formatage
+        run: npm run format:check
+
       #Etape 4: Construire l'application pour la production
       - name: Construction de l'application
         run: npm run build
