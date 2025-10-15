@@ -1,0 +1,48 @@
+name: Déploiement GitHub Pages
+on:
+  push:
+    branches: [master] # Déclenche le workflow sur les pushs vers la branche 'main'
+  workflow_dispatch: # Permet de déclencher manuellement le workflow depuis l'interface GitHub
+
+permissions:
+  contents: read # Nécessaire pour déployer sur GitHub Pages
+  id-token: write # Nécessaire pour l'authentification OIDC
+  pages: write # Nécessaire pour déployer sur GitHub Pages
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Construction
+    runs-on: ubuntu-latest
+    steps:
+      #Etape 1: Checkout du code
+      - name: Récupération du code
+        uses: actions/checkout@v4
+
+      #Etape 2: Installer Node.js
+      - name: Installation de Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      #Etape 3: Installer les dépendances du projet
+      - name: Installation des dépendances
+        run: npm ci
+
+      #Etape 4: Construire l'application pour la production
+      - name: Construction de l'application
+        run: npm run build
+
+      #Etape 5: Déployer sur GitHub Pages
+      - name: Configuration sur GitHub Pages
+        uses: actions/configure-pages@v4
+
+      #Etape 6: Uploader le dossier dist
+      - name: Upload des fichiers
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: "./dist"

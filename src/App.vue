@@ -1,17 +1,12 @@
-<script setup></script>
+<script setup>
+import NavBar from "./components/NavBar.vue";
+import Footer from "./components/FooterBar.vue";
+</script>
 
 <template>
-  <header>
-    <nav>
-      <ul>
-        <li>
-          <RouterLink to="/">Home</RouterLink>
-        </li>
-      </ul>
-    </nav>
-  </header>
-
+  <NavBar />
   <RouterView />
+  <Footer />
 </template>
 
 <style scoped></style>

@@ -9,6 +9,7 @@
     "preview": "vite preview",
     "lint": "eslint . --ext .js,.vue --fix src",
     "format": "prettier . --write",
+    "format:check": "prettier . --check",
     "prepare": "husky"
   },
   "dependencies": {
